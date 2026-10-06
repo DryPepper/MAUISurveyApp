@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SurveyApp.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="14">
+
+            <Image Source="dotnet_bot.png"
+                   Aspect="AspectFit"
+                   HeightRequest="120" />
+
+            <Label Text="Настройки путешествия во времени"
+                   FontSize="26"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+
+            <Label Text="Поля отмеченные * обязательны"
+                   FontSize="13"
+                   FontAttributes="Italic"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,10" />
+
+            <Grid RowDefinitions="Auto,Auto"
+                  ColumnDefinitions="130,*"
+                  RowSpacing="10"
+                  ColumnSpacing="10">
+
+                <Label Grid.Row="0" Grid.Column="0"
+                       Text="Имя *"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       VerticalOptions="Center" />
+                <Entry x:Name="NameEntry"
+                       Grid.Row="0" Grid.Column="1"
+                       Placeholder="Марти Макфлай"
+                       Keyboard="Text"
+                       MaxLength="40" />
+
+                <Label Grid.Row="1" Grid.Column="0"
+                       Text="Год рождения *"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       VerticalOptions="Center" />
+                <Entry x:Name="BirthEntry"
+                       Grid.Row="1" Grid.Column="1"
+                       Placeholder="1885, 2077 или 3099"
+                       Keyboard="Numeric"
+                       MaxLength="4" />
+            </Grid>
+
+            <Editor x:Name="ParadoxEditor"
+                Placeholder="Опишите временной парадокс, который вы случайно создали (не более 500 символов)"
+                AutoSize="TextChanges"
+                MaxLength="300" />
+
+            <Picker x:Name="TargetPicker"
+                Title="Выберите основную цель вашего путешествия *">
+                <Picker.Items>
+                    <x:String>Туризм</x:String>
+                    <x:String>Спасение мира</x:String>
+                    <x:String>Покупка вымерших животных</x:String>
+                    <x:String>Побег от кредиторов</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <Label Text="Ваш временной статус"
+                   FontSize="16"
+                   FontAttributes="Bold" />
+            <HorizontalStackLayout Spacing="20">
+                <RadioButton x:Name="TouristRadio"
+                             Content="Турист"
+                             GroupName="Status"
+                             Value="Tourist"
+                             IsChecked="True" />
+                <RadioButton x:Name="RefugeeRadio"
+                             Content="Беженец"
+                             GroupName="Status"
+                             Value="Refugee" />
+                <RadioButton x:Name="InterfererRadio"
+                             Content="Вмешавшийся в историю"
+                             GroupName="Status"
+                             Value="Interferer" />
+            </HorizontalStackLayout>
+
+            <Label Text="Вопросы"
+                   FontSize="16"
+                   FontAttributes="Bold" />
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Готовы ли вы к неожиданной встрече с самим собой?" VerticalOptions="Center" />
+                <CheckBox x:Name="SelfCheck"
+                          IsChecked="True"
+                          Color="Orange" />
+                <Label Text="Взяли ли вы с собой антирадиационные таблетки?" VerticalOptions="Center" />
+                <CheckBox x:Name="RadCheck"
+                          IsChecked="False"
+                          Color="Blue" />
+            </VerticalStackLayout>
+
+            <Label Text="Выберите точную дату прибытия"
+                   FontSize="16"
+                   FontAttributes="Bold" />
+            <DatePicker x:Name="DatePicker"
+                        Format="dd.MM.yyyy"
+                        MinimumDate="01.01.1000"
+                        MaximumDate="01.01.3000"
+                        Date="01.01.2000" />
+
+            <Label x:Name="DisorientationLabel"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   Text="{Binding Source={x:Reference DisorientationStepper},
+                                  Path=Value,
+                                  Mode=OneWay,
+                                  StringFormat='Уровень временной дезориентации после прыжка: {0:F0}'}" />
+            <Stepper x:Name="DisorientationStepper"
+                     Minimum="1"
+                     Maximum="10"
+                     Increment="1"
+                     Value="5" />
+
+            <HorizontalStackLayout Spacing="10">
+                <Switch x:Name="AgreeSwitch"
+                    IsToggled="False"
+                    OnColor="LightGreen"
+                    Toggled="OnAgreeToggled" />
+                <Label Text="Разрешаю системе создавать парадоксальные временные петли при ошибке"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <Button x:Name="JumpButton"
+                Text="Активировать прыжок"
+                IsEnabled="False"
+                Clicked="OnJumpClicked" />
+
+            <Button x:Name="ClearButton"
+                    Text="Очистить"
+                    Clicked="OnClearClicked" />
+
+            <Label x:Name="ResultLabel"
+                   IsVisible="False"
+                   FontSize="15"
+                   Margin="0,10,0,20" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
